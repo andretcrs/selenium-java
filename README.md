@@ -141,4 +141,4 @@ Este projeto faz parte do meu processo de aprendizado em automação de testes, 
 
 ---
 
-✍️ **Autor:** Projeto de estudos – Curso Alura | Selenium com Java
+✍️ **André Scheffer:** Projeto de estudos – Curso Alura | Selenium com Java
