@@ -44,11 +44,10 @@ public class LeilaoPage {
         browser.findElement(By.id("button-submit")).submit();
     }
 
-    public String obterMensagemDeSucesso() {
+    public boolean estaNaPaginaDeLeiloes() {
         WebDriverWait wait = new WebDriverWait(browser, Duration.ofSeconds(10));
-        WebElement alerta = wait.until(ExpectedConditions.presenceOfElementLocated(
-                By.cssSelector(".alert.alert-primary")
-        ));
-        return alerta.getText();
+
+        return wait.until(ExpectedConditions.urlContains("/leiloes"));
     }
+
 }
