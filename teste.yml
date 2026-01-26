@@ -31,4 +31,4 @@ jobs:
           timeout 60s bash -c 'until curl -s localhost:8080; do sleep 5; done'
 
       - name: Executar Testes com Maven
-        run: mvn test
+        run: mvn clean test
