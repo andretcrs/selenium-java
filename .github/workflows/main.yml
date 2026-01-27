@@ -46,7 +46,7 @@ jobs:
       # 6. Roda os testes do Selenium
       # Como definimos na DriverFactory, ele detectará o ambiente CI e usará Headless
       - name: Executar Testes de UI (Selenium)
-        run: mvn clean test
+        run: mvn clean test -B -ntp
 
       # 7. Se o teste falhar, o GitHub salva o log para você baixar e ler
       - name: Upload Logs em caso de falha
