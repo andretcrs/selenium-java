@@ -1,13 +1,13 @@
 # Projeto de Automação de Testes com Selenium e Java
 
-## 📚 Sobre o Projeto
+## Sobre o Projeto
 Este repositório contém um **projeto de estudos** de **automação de testes com Selenium WebDriver e Java**, desenvolvido como parte de um **curso da plataforma Alura**.
 
 ⚠️ **Atenção:** Este projeto **não é um projeto produtivo**. Ele foi criado exclusivamente para fins educacionais, com foco no aprendizado de automação de testes, boas práticas de código e organização de projetos Java.
 
 ---
 
-## 🎯 Objetivos de Aprendizado
+## Objetivos de Aprendizado
 - Utilizar Selenium WebDriver para automação de testes web
 - Estruturar um projeto de automação em Java
 - Aplicar o padrão **Page Object Model (POM)**
@@ -18,7 +18,7 @@ Este repositório contém um **projeto de estudos** de **automação de testes c
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## Tecnologias Utilizadas
 - **Java**
 - **Selenium WebDriver**
 - **JUnit**
@@ -30,7 +30,7 @@ Este repositório contém um **projeto de estudos** de **automação de testes c
 
 ---
 
-## 📁 Estrutura do Projeto
+## Estrutura do Projeto
 A estrutura do projeto segue uma separação clara de responsabilidades:
 
 ```
@@ -57,7 +57,7 @@ src
 
 ---
 
-## ⚙️ Arquivo de Configuração
+##  Arquivo de Configuração
 O arquivo `config.properties` é utilizado para centralizar configurações como:
 
 - URL base da aplicação
@@ -73,7 +73,7 @@ timeout=10
 
 ---
 
-## ▶️ Pré-requisitos
+## Pré-requisitos
 - Java instalado e configurado
 - Maven instalado
 - Google Chrome atualizado
@@ -82,7 +82,7 @@ timeout=10
 
 ---
 
-## 🚀 Executando os Testes
+## Executando os Testes
 1. Clone o repositório:
 ```bash
 git clone <https://github.com/andretcrs/selenium-java.git>
@@ -100,7 +100,7 @@ mvn clean test
 
 ---
 
-## 📊 Relatórios com Allure
+## Relatórios com Allure
 O projeto **já está configurado para gerar relatórios com Allure**.
 
 Após executar os testes, utilize:
@@ -118,7 +118,7 @@ allure open target/allure-report
 
 ---
 
-## 🧪 Exemplos de Testes Automatizados
+## Exemplos de Testes Automatizados
 - Login com dados válidos e inválidos
 - Criação e edição de leilões
 - Validação de mensagens exibidas na interface
@@ -126,7 +126,7 @@ allure open target/allure-report
 
 ---
 
-## 📌 Boas Práticas Aplicadas
+## Boas Práticas Aplicadas
 - Page Object Model (POM)
 - Driver centralizado via Factory
 - Classe base para reaproveitamento de setup/teardown
@@ -135,9 +135,9 @@ allure open target/allure-report
 
 ---
 
-## 📖 Observação Final
+## Observação Final
 Este projeto faz parte do meu processo de aprendizado em automação de testes, baseado nos cursos realizados na **Alura**, servindo como base para evolução em frameworks de testes automatizados.
 
 ---
 
-✍️ **André Scheffer:** Projeto de estudos – Curso Alura | Selenium com Java
+ **André Scheffer:** Projeto de estudos – Curso Alura | Selenium com Java
