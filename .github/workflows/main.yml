@@ -1,0 +1,57 @@
+name: CI Selenium Java
+
+# Gatilhos: roda sempre que houver push ou pull request na main
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    # Máquina virtual que o GitHub nos empresta
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Baixa o código do seu repositório para a máquina virtual
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      # 2. Instala o Java 17 (mesma versão que você usa local)
+      - name: Configurar JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      # 3. Compila o projeto e gera o arquivo .jar da aplicação
+      - name: Build da Aplicação
+        run: mvn clean package -DskipTests
+
+      # 4. Sobe a sua aplicação em background (porta 8080)
+      # O '&' e o 'nohup' garantem que ela continue rodando para os testes
+      - name: Iniciar Aplicação (Spring Boot)
+        run: |
+          nohup mvn spring-boot:run > spring.log 2>&1 &
+          echo "Aplicação iniciando..."
+
+      # 5. Aguarda até que a URL esteja respondendo (Health Check)
+      - name: Aguardar Aplicação subir
+        run: |
+          echo "Aguardando porta 8080..."
+          timeout 60s bash -c 'until curl -s localhost:8080 > /dev/null; do sleep 5; done'
+          echo "Aplicação Online!"
+
+      # 6. Roda os testes do Selenium
+      # Como definimos na DriverFactory, ele detectará o ambiente CI e usará Headless
+      - name: Executar Testes de UI (Selenium)
+        run: mvn test
+
+      # 7. Se o teste falhar, o GitHub salva o log para você baixar e ler
+      - name: Upload Logs em caso de falha
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-do-sistema
+          path: spring.log
