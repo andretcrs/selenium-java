@@ -48,7 +48,6 @@ src
 │   │       │   └── LoginPage.java           # Page Object de Login
 │   │       ├── tests
 │   │       │   ├── LeilaoTest.java          # Testes de Leilão
-│   │       │   └── LoginTest.java           # Testes de Login
 │   │       └── utils                        # Classes utilitárias
 │   └── resources
 │       └── config.properties                # Configurações do projeto
