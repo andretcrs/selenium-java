@@ -21,14 +21,20 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      - name: Iniciar Aplicação (LeilaoApplication)
-        # O '&' faz o comando rodar em background para não travar o terminal
-        run: mvn spring-boot:run &
+      # O Ubuntu-latest já vem com Chrome, mas é bom garantir o setup
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Iniciar Aplicação
+        # Usamos o 'nohup' para garantir que o processo continue rodando
+        run: nohup mvn spring-boot:run > spring.log 2>&1 &
 
       - name: Aguardar Aplicação subir
         run: |
           echo "Aguardando porta 8080..."
-          timeout 60s bash -c 'until curl -s localhost:8080; do sleep 5; done'
+          # Verifica se a aplicação responde 200 OK
+          timeout 60s bash -c 'until curl -sI http://localhost:8080 | grep "200 OK"; do sleep 5; done'
 
       - name: Executar Testes com Maven
-        run: mvn clean test
+        # Adicionamos uma flag para forçar o modo headless se seu código aceitar propriedades
+        run: mvn clean test -Dheadless=true
