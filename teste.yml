@@ -21,20 +21,31 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      # O Ubuntu-latest já vem com Chrome, mas é bom garantir o setup
-      - name: Setup Chrome
-        uses: browser-actions/setup-chrome@v1
+      - name: Build da Aplicação
+        run: mvn clean package -DskipTests
 
-      - name: Iniciar Aplicação
-        # Usamos o 'nohup' para garantir que o processo continue rodando
-        run: nohup mvn spring-boot:run > spring.log 2>&1 &
-
-      - name: Aguardar Aplicação subir
+      - name: Iniciar Aplicação (Spring Boot)
+        # O nohup mantém o processo vivo e o > libera o console para o próximo passo
         run: |
-          echo "Aguardando porta 8080..."
-          # Verifica se a aplicação responde 200 OK
-          timeout 60s bash -c 'until curl -sI http://localhost:8080 | grep "200 OK"; do sleep 5; done'
+          nohup mvn spring-boot:run > spring.log 2>&1 &
+          echo "Aplicação iniciando em background..."
 
-      - name: Executar Testes com Maven
-        # Adicionamos uma flag para forçar o modo headless se seu código aceitar propriedades
-        run: mvn clean test -Dheadless=true
+      - name: Aguardar Aplicação subir (Health Check)
+        run: |
+          echo "Aguardando porta 8080 estar disponível..."
+          # Tenta conectar na porta 8080 por até 60 segundos
+          timeout 60s bash -c 'until curl -sI http://localhost:8080 | grep "200 OK"; do printf "."; sleep 5; done'
+          echo "Aplicação está UP!"
+
+      - name: Executar Testes de UI (Selenium)
+        # O DriverFactory já detecta o GITHUB_ACTIONS automaticamente
+        run: mvn test
+
+      - name: Upload Logs se o teste falhar
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-e-screenshots
+          path: |
+            spring.log
+            target/surefire-reports/
